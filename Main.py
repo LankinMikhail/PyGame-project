@@ -1,4 +1,5 @@
 import pygame
+from pygame import gfxdraw
 import sys
 import random
 
@@ -77,6 +78,29 @@ class Board:
         return cell
 
 
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, radius, x, y, vx, vy):
+        super().__init__()
+        self.radius = radius
+        self.x = x
+        self.y = y
+        self.vx = vx
+        self.vy = vy
+
+    def update(self):
+        self.x += self.vx
+        self.y += self.vy
+
+    def render(self, screen):
+        gfxdraw.aacircle(screen, self.x, self.y, self.radius, (0, 0, 0))
+        gfxdraw.filled_circle(screen, self.x, self.y, self.radius, (0, 0, 0))
+
+
+class Border(pygame.sprite.Sprite):
+    def __init__(self):
+        pass
+
+
 level1 = [["", "", "", "", "", "", "", "", "", "", ""],
           ["", "RLU", "", "", "", "", "", "", "", "", ""],
           ["", "LD", "UD", "", "", "", "", "", "", "", ""],
@@ -86,7 +110,7 @@ level1 = [["", "", "", "", "", "", "", "", "", "", ""],
           ["", "", "", "", "", "UR", "U", "LU", "", "", ""],
           ["", "", "", "", "", "D", "D", "DR", "", "", ""],
           ["", "", "", "", "", "", "", "", "", "", ""]]
-FPS = 30
+FPS = 60
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((1000, 800))
@@ -94,10 +118,16 @@ if __name__ == "__main__":
     field = Board(11, 9)
     field.set_view(10, 10, 80)
     field.fill(level1)
+    bullets = [Bullet(3, 200, 200, 3, 3)]
+    clock = pygame.time.Clock()
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
         screen.fill((230, 230, 230))
         field.render(screen)
+        for bullet in bullets:
+            bullet.render(screen)
+            bullet.update()
+        clock.tick(FPS)
         pygame.display.flip()

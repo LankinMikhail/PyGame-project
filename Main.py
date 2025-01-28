@@ -45,7 +45,6 @@ class Board:
             end = (self.top + (j + 1) * self.cell_size, self.left + (i + 1) * self.cell_size + 1)
         return st, end
 
-
     def fill(self, level):
         for j in range(self.width):
             for i in range(self.height):

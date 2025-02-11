@@ -15,20 +15,21 @@ class Bullet(pygame.sprite.Sprite):
         self.life = life
 
     def update(self):
-        self.x += self.vx
-        self.y += self.vy
         self.life -= 1
         if self.life == 0:
             bullets.remove(self)
-        self.rect = self.rect.move(self.vx, self.vy)
+            return
+        self.x += self.vx
+        self.y += self.vy
+        self.rect = pygame.Rect(round(self.x), round(self.y), 2 * self.radius, 2 * self.radius)
         if pygame.sprite.spritecollideany(self, horizontal_borders):
             self.vy = -self.vy
         elif pygame.sprite.spritecollideany(self, vertical_borders):
             self.vx = -self.vx
 
     def render(self, screen):
-        gfxdraw.aacircle(screen, self.x, self.y, self.radius, (0, 0, 0))
-        gfxdraw.filled_circle(screen, self.x, self.y, self.radius, (0, 0, 0))
+        gfxdraw.aacircle(screen, round(self.x), round(self.y), self.radius, (0, 0, 0))
+        gfxdraw.filled_circle(screen, round(self.x), round(self.y), self.radius, (0, 0, 0))
 
 
 bullets = []

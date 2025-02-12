@@ -14,12 +14,19 @@ class Player(pygame.sprite.Sprite):
         self.effect = None
         self.motion = "stop"
         self.rotating = "stop"
+        self.is_alive = True
+        if team == 1:
+            self.w = "w"
+            self.s = "s"
+            self.a = "a"
+            self.d = "d"
+            self.q = "q"
 
     def render(self, screen):
         texture = pygame.transform.rotate(pygame.transform.scale(load_image(os.path.dirname(__file__)[:-10]
                                                                             + "\\Assets\\тест_модель.png"),
                                                                  (50, 75)), self.angle + 180)
-        screen.blit(texture, (round(self.x), round(self.y)))
+        screen.blit(texture, (round(self.x - 25 * 0), round(self.y - 37.5 * 0)))
 
     def update(self):
         if self.motion == "forward":

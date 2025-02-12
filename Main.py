@@ -27,7 +27,7 @@ if __name__ == "__main__":
     field.set_view(10, 10, 100)
     field.fill(level1)
     clock = pygame.time.Clock()
-    player1 = Player(0, 700, 700, 60)
+    players = [Player(1, 700, 700, 0)]
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -38,27 +38,35 @@ if __name__ == "__main__":
                 bullets.append(Bullet(3, event.pos[0], event.pos[1], velocity * math.sin(math.radians(angle)),
                                       velocity * math.cos(math.radians(angle)), FPS * 30))
             if event.type == pygame.KEYDOWN:
-                if event.unicode == "w":
-                    player1.motion = "forward"
-                if event.unicode == "s":
-                    player1.motion = "back"
-                if event.unicode == "q":
-                    player1.rotating = "left"
-                if event.unicode == "e":
-                    player1.rotating = "right"
+                for player in players:
+                    if event.unicode == player.w:
+                        player.motion = "forward"
+                    if event.unicode == player.s:
+                        player.motion = "back"
+                    if event.unicode == player.d:
+                        player.rotating = "left"
+                    if event.unicode == player.a:
+                        player.rotating = "right"
+                    if event.unicode == player.q:
+                        velocity = 180 / FPS
+                        bullets.append(Bullet(3, player.x, player.y,
+                                              velocity * math.sin(math.radians(player.angle)),
+                                              velocity * math.cos(math.radians(player.angle)), FPS * 30))
             if event.type == pygame.KEYUP:
-                if event.unicode == "w" and player1.motion == "forward":
-                    player1.motion = "stop"
-                if event.unicode == "s" and player1.motion == "back":
-                    player1.motion = "stop"
-                if event.unicode == "q" and player1.rotating == "left":
-                    player1.rotating = "stop"
-                if event.unicode == "e" and player1.rotating == "right":
-                    player1.rotating = "stop"
+                for player in players:
+                    if event.unicode == player.w and player.motion == "forward":
+                        player.motion = "stop"
+                    if event.unicode == player.s and player.motion == "back":
+                        player.motion = "stop"
+                    if event.unicode == player.d and player.rotating == "left":
+                        player.rotating = "stop"
+                    if event.unicode == player.a and player.rotating == "right":
+                        player.rotating = "stop"
         screen.fill((230, 230, 230))
         field.render(screen)
-        player1.render(screen)
-        player1.update()
+        for player in players:
+            player.render(screen)
+            player.update()
         for bullet in bullets:
             bullet.render(screen)
             bullet.update()

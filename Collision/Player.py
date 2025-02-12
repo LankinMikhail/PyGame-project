@@ -13,19 +13,25 @@ class Player(pygame.sprite.Sprite):
         self.angle = angle
         self.effect = None
         self.motion = "stop"
+        self.rotating = "stop"
 
     def render(self, screen):
-        texture = pygame.transform.scale(load_image(os.path.dirname(__file__)[:-10] + "\\Assets\\тест_модель.png"),
-                                         (50, 75))
+        texture = pygame.transform.rotate(pygame.transform.scale(load_image(os.path.dirname(__file__)[:-10]
+                                                                            + "\\Assets\\тест_модель.png"),
+                                                                 (50, 75)), self.angle + 180)
         screen.blit(texture, (round(self.x), round(self.y)))
 
     def update(self):
         if self.motion == "forward":
             self.y += math.cos(math.radians(self.angle))
             self.x += math.sin(math.radians(self.angle))
-        if self.motion == "back":
+        elif self.motion == "back":
             self.y -= math.cos(math.radians(self.angle))
             self.x -= math.sin(math.radians(self.angle))
+        if self.rotating == "left":
+            self.angle -= 1
+        elif self.rotating == "right":
+            self.angle += 1
 
 
 def load_image(name):

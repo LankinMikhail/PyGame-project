@@ -27,7 +27,7 @@ if __name__ == "__main__":
     field.set_view(10, 10, 100)
     field.fill(level1)
     clock = pygame.time.Clock()
-    player1 = Player(0, 700, 900, 100)
+    player1 = Player(0, 700, 700, 60)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -42,11 +42,19 @@ if __name__ == "__main__":
                     player1.motion = "forward"
                 if event.unicode == "s":
                     player1.motion = "back"
+                if event.unicode == "q":
+                    player1.rotating = "left"
+                if event.unicode == "e":
+                    player1.rotating = "right"
             if event.type == pygame.KEYUP:
                 if event.unicode == "w" and player1.motion == "forward":
                     player1.motion = "stop"
                 if event.unicode == "s" and player1.motion == "back":
                     player1.motion = "stop"
+                if event.unicode == "q" and player1.rotating == "left":
+                    player1.rotating = "stop"
+                if event.unicode == "e" and player1.rotating == "right":
+                    player1.rotating = "stop"
         screen.fill((230, 230, 230))
         field.render(screen)
         player1.render(screen)

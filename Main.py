@@ -48,10 +48,7 @@ if __name__ == "__main__":
                     if event.unicode == player.a:
                         player.rotating = "right"
                     if event.unicode == player.q:
-                        velocity = 180 / FPS
-                        bullets.append(Bullet(3, player.x, player.y,
-                                              velocity * math.sin(math.radians(player.angle)),
-                                              velocity * math.cos(math.radians(player.angle)), FPS * 30))
+                        bullets.append(player.shoot(FPS))
             if event.type == pygame.KEYUP:
                 for player in players:
                     if event.unicode == player.w and player.motion == "forward":

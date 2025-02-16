@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         angle = round(self.angle)
         center = self.center()
         texture = pygame.transform.rotate(pygame.transform.scale(load_image(os.path.dirname(__file__)[:-10]
-                                                                            + "\\Assets\\тест_модель.png"),
+                                                                            + "\\Assets\\танк1.png"),
                                                                  (self.width, self.height)), angle + 180)
         self.rect = texture.get_rect()
         self.rect.x = round(self.x - center[0])

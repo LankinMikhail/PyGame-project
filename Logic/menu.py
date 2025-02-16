@@ -1,29 +1,33 @@
 import pygame
 import sys
-import random
+import os
 
 from pygame import MOUSEMOTION
+from Collision.Bullet import load_image
 
 FPS = 120
+
 
 def terminate():
     pygame.quit()
     sys.exit()
 
+
 def fourty_screen(cnt):
     fr_screen = pygame.display.set_mode((1000, 800))
     screen.blit(fr_screen, (0, 0))
     back_button = (0, 725, 140, 800)
-    anim1_deactivate = [pygame.image.load('im11.PNG'), pygame.image.load("im12.PNG")]
-    anim2_deactivate = [pygame.image.load("im21.PNG"), pygame.image.load("im22.PNG")]
-    anim3_deactivate = [pygame.image.load("im31.PNG"), pygame.image.load("im32.PNG")]
-    anim4_deactivate = [pygame.image.load("im41.PNG"), pygame.image.load("im42.PNG")]
-    anim1_activate = [pygame.image.load("im13.PNG")]
-    anim2_activate = [pygame.image.load("im23.PNG")]
-    anim3_activate = [pygame.image.load("im33.PNG")]
-    anim4_activate = [pygame.image.load("im43.PNG")]
-    anim2_activate_2x2 = [pygame.image.load("im24.PNG")]
-    anim3_activate_2x2 = [pygame.image.load("im34.PNG")]
+    way = os.path.dirname(__file__)[:-6] + "/Assets/"
+    anim1_deactivate = [load_image(way + 'im11.PNG'), load_image(way + "im12.PNG")]
+    anim2_deactivate = [load_image(way + "im21.PNG"), load_image(way + "im22.PNG")]
+    anim3_deactivate = [load_image(way + "im31.PNG"), load_image(way + "im32.PNG")]
+    anim4_deactivate = [load_image(way + "im41.PNG"), load_image(way + "im42.PNG")]
+    anim1_activate = [load_image(way + "im13.PNG")]
+    anim2_activate = [load_image(way + "im23.PNG")]
+    anim3_activate = [load_image(way + "im33.PNG")]
+    anim4_activate = [load_image(way + "im43.PNG")]
+    anim2_activate_2x2 = [load_image(way + "im24.PNG")]
+    anim3_activate_2x2 = [load_image(way + "im34.PNG")]
     flag1 = False
     flag2 = False
     flag3 = False
@@ -66,21 +70,19 @@ def fourty_screen(cnt):
                 if flag4:
                     anim4 = anim4_activate
             if event.type == MOUSEMOTION and (
-                    event.pos[0] >= back_button[0] and event.pos[1] >= back_button[1] and event.pos[0] <=
-                    back_button[2] and event.pos[1] <= back_button[3]):
+                    back_button[0] <= event.pos[0] <= back_button[2] and
+                    back_button[1] <= event.pos[1] <= back_button[3]):
                 flag5 = True
 
             elif event.type == MOUSEMOTION and not (
-                    event.pos[0] >= back_button[0] and event.pos[1] >= back_button[1] and event.pos[0] <=
-                    back_button[2] and event.pos[1] <= back_button[3]):
+                    back_button[0] <= event.pos[0] <= back_button[2] and
+                    back_button[1] <= event.pos[1] <= back_button[3]):
                 flag5 = False
             if event.type == pygame.QUIT:
                 terminate()
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= back_button[0] and
-                   event.pos[1] >= back_button[1] and
-                   event.pos[0] <= back_button[2] and
-                   event.pos[1] <= back_button[3])):
+                  (back_button[0] <= event.pos[0] <= back_button[2] and
+                   back_button[1] <= event.pos[1] <= back_button[3])):
                 return False
             if int(cnt) == 2 and flag1 and flag2:
                 f = True
@@ -151,76 +153,68 @@ def third_screen(cnt):
         bc_pos_text = (410, 510)
         for event in pygame.event.get():
             if event.type == MOUSEMOTION and (
-                    event.pos[0] >= small_level[0] and event.pos[1] >= small_level[1] and event.pos[0] <=
-                    small_level[2] and event.pos[1] <= small_level[3]):
+                    small_level[0] <= event.pos[0] <= small_level[2] and
+                    small_level[1] <= event.pos[1] <= small_level[3]):
                 flag1 = True
 
             elif event.type == MOUSEMOTION and not (
-                    event.pos[0] >= small_level[0] and event.pos[1] >= small_level[1] and event.pos[0] <=
-                    small_level[2] and event.pos[1] <= small_level[3]):
+                    small_level[0] <= event.pos[0] <= small_level[2] and
+                    small_level[1] <= event.pos[1] <= small_level[3]):
                 flag1 = False
 
             if event.type == MOUSEMOTION and (
-                    event.pos[0] >= medium_level[0] and event.pos[1] >= medium_level[1] and event.pos[0] <=
-                    medium_level[2] and event.pos[1] <= medium_level[3]):
+                    medium_level[0] <= event.pos[0] <= medium_level[2] and
+                    medium_level[1] <= event.pos[1] <= medium_level[3]):
                 flag2 = True
 
             elif event.type == MOUSEMOTION and not (
-                    event.pos[0] >= medium_level[0] and event.pos[1] >= medium_level[1] and event.pos[0] <=
-                    medium_level[2] and event.pos[1] <= medium_level[3]):
+                    medium_level[0] <= event.pos[0] <= medium_level[2] and
+                    medium_level[1] <= event.pos[1] <= medium_level[3]):
                 flag2 = False
 
             if event.type == MOUSEMOTION and (
-                    event.pos[0] >= large_level[0] and event.pos[1] >= large_level[1] and event.pos[0] <=
-                    large_level[2] and event.pos[1] <= large_level[3]):
+                    large_level[0] <= event.pos[0] <= large_level[2] and
+                    large_level[1] <= event.pos[1] <= large_level[3]):
                 flag3 = True
 
             elif event.type == MOUSEMOTION and not (
-                    event.pos[0] >= large_level[0] and event.pos[1] >= large_level[1] and event.pos[0] <=
-                    large_level[2] and event.pos[1] <= large_level[3]):
+                    large_level[0] <= event.pos[0] <= large_level[2] and
+                    large_level[1] <= event.pos[1] <= large_level[3]):
                 flag3 = False
 
             if event.type == MOUSEMOTION and (
-                    event.pos[0] >= back_button[0] and event.pos[1] >= back_button[1] and event.pos[0] <=
-                    back_button[2] and event.pos[1] <= back_button[3]):
+                    back_button[0] <= event.pos[0] <= back_button[2] and
+                    back_button[1] <= event.pos[1] <= back_button[3]):
                 flag4 = True
 
             elif event.type == MOUSEMOTION and not (
-                    event.pos[0] >= back_button[0] and event.pos[1] >= back_button[1] and event.pos[0] <=
-                    back_button[2] and event.pos[1] <= back_button[3]):
+                    back_button[0] <= event.pos[0] <= back_button[2] and
+                    back_button[1] <= event.pos[1] <= back_button[3]):
                 flag4 = False
 
             if event.type == pygame.QUIT:
                 terminate()
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= small_level[0] and
-                   event.pos[1] >= small_level[1] and
-                   event.pos[0] <= small_level[2] and
-                   event.pos[1] <= small_level[3])):
+                  (small_level[0] <= event.pos[0] <= small_level[2] and
+                   small_level[1] <= event.pos[1] <= small_level[3])):
                 ans = fourty_screen(cnt)
                 if ans:
                     return "small"
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= medium_level[0] and
-                   event.pos[1] >= medium_level[1] and
-                   event.pos[0] <= medium_level[2] and
-                   event.pos[1] <= medium_level[3])):
+                  (medium_level[0] <= event.pos[0] <= medium_level[2] and
+                   medium_level[1] <= event.pos[1] <= medium_level[3])):
                 ans = fourty_screen(cnt)
                 if ans:
                     return "medium"
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= large_level[0] and
-                   event.pos[1] >= large_level[1] and
-                   event.pos[0] <= large_level[2] and
-                   event.pos[1] <= large_level[3])):
+                  (large_level[0] <= event.pos[0] <= large_level[2] and
+                   large_level[1] <= event.pos[1] <= large_level[3])):
                 ans = fourty_screen(cnt)
                 if ans:
                     return "large"
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= back_button[0] and
-                   event.pos[1] >= back_button[1] and
-                   event.pos[0] <= back_button[2] and
-                   event.pos[1] <= back_button[3])):
+                  (back_button[0] <= event.pos[0] <= back_button[2] and
+                   back_button[1] <= event.pos[1] <= back_button[3])):
                 return "back"
         if flag1:
             sm_f = pygame.font.SysFont('Times New Roman', 70)
@@ -245,6 +239,7 @@ def third_screen(cnt):
         pygame.display.flip()
         clock.tick(FPS)
 
+
 def second_screen():
     sec_screen = pygame.display.set_mode((1000, 800))
     screen.blit(sec_screen, (0, 0))
@@ -252,7 +247,7 @@ def second_screen():
     mode_button3 = (250, 380, 475, 490)
     mode_button4 = (475, 380, 700, 490)
     mode_button2x2 = (700, 380, 925, 490)
-    quit_button =  (360, 490, 580, 615)
+    quit_button = (360, 490, 580, 615)
     flag1 = False
     flag2 = False
     flag3 = False
@@ -276,80 +271,90 @@ def second_screen():
         pos_text4 = (730, 405)
         pos_text5 = (410, 510)
         for event in pygame.event.get():
-            if event.type == MOUSEMOTION and (event.pos[0] >= mode_button2[0] and event.pos[1] >= mode_button2[1] and event.pos[0] <= mode_button2[2] and event.pos[1] <= mode_button2[3]):
+            if event.type == MOUSEMOTION and (
+                    mode_button2[0] <= event.pos[0] <= mode_button2[2] and mode_button2[1] <= event.pos[1] <=
+                    mode_button2[3]):
                 flag1 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= mode_button2[0] and event.pos[1] >= mode_button2[1] and event.pos[0] <= mode_button2[2] and event.pos[1] <= mode_button2[3]):
+            elif event.type == MOUSEMOTION and not (
+                    mode_button2[0] <= event.pos[0] <= mode_button2[2] and mode_button2[1] <= event.pos[1] <=
+                    mode_button2[3]):
                 flag1 = False
 
-            if event.type == MOUSEMOTION and (event.pos[0] >= mode_button3[0] and event.pos[1] >= mode_button3[1] and event.pos[0] <= mode_button3[2] and event.pos[1] <= mode_button3[3]):
+            if event.type == MOUSEMOTION and (
+                    mode_button3[0] <= event.pos[0] <= mode_button3[2] and mode_button3[1] <= event.pos[1] <=
+                    mode_button3[3]):
                 flag2 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= mode_button3[0] and event.pos[1] >= mode_button3[1] and event.pos[0] <= mode_button3[2] and event.pos[1] <= mode_button3[3]):
+            elif event.type == MOUSEMOTION and not (
+                    mode_button3[0] <= event.pos[0] <= mode_button3[2] and mode_button3[1] <= event.pos[1] <=
+                    mode_button3[3]):
                 flag2 = False
 
-            if event.type == MOUSEMOTION and (event.pos[0] >= mode_button4[0] and event.pos[1] >= mode_button4[1] and event.pos[0] <= mode_button4[2] and event.pos[1] <= mode_button4[3]):
+            if event.type == MOUSEMOTION and (
+                    mode_button4[0] <= event.pos[0] <= mode_button4[2] and mode_button4[1] <= event.pos[1] <=
+                    mode_button4[3]):
                 flag3 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= mode_button4[0] and event.pos[1] >= mode_button4[1] and event.pos[0] <= mode_button4[2] and event.pos[1] <= mode_button4[3]):
+            elif event.type == MOUSEMOTION and not (
+                    mode_button4[0] <= event.pos[0] <= mode_button4[2] and mode_button4[1] <= event.pos[1] <=
+                    mode_button4[3]):
                 flag3 = False
 
-            if event.type == MOUSEMOTION and (event.pos[0] >= mode_button2x2[0] and event.pos[1] >= mode_button2x2[1] and event.pos[0] <= mode_button2x2[2] and event.pos[1] <= mode_button2x2[3]):
+            if event.type == MOUSEMOTION and (
+                    mode_button2x2[0] <= event.pos[0] <= mode_button2x2[2] and mode_button2x2[1] <= event.pos[1] <=
+                    mode_button2x2[3]):
                 flag4 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= mode_button2x2[0] and event.pos[1] >= mode_button2x2[1] and event.pos[0] <= mode_button2x2[2] and event.pos[1] <= mode_button2x2[3]):
+            elif event.type == MOUSEMOTION and not (
+                    mode_button2x2[0] <= event.pos[0] <= mode_button2x2[2] and mode_button2x2[1] <= event.pos[1] <=
+                    mode_button2x2[3]):
                 flag4 = False
 
-            if event.type == MOUSEMOTION and (event.pos[0] >= quit_button[0] and event.pos[1] >= quit_button[1] and event.pos[0] <= quit_button[2] and event.pos[1] <= quit_button[3]):
+            if event.type == MOUSEMOTION and (
+                    quit_button[0] <= event.pos[0] <= quit_button[2] and
+                    quit_button[1] <= event.pos[1] <= quit_button[3]):
                 flag5 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= quit_button[0] and event.pos[1] >= quit_button[1] and event.pos[0] <= quit_button[2] and event.pos[1] <= quit_button[3]):
+            elif event.type == MOUSEMOTION and not (
+                    quit_button[0] <= event.pos[0] <= quit_button[2] and
+                    quit_button[1] <= event.pos[1] <= quit_button[3]):
                 flag5 = False
 
             if event.type == pygame.QUIT:
                 terminate()
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= mode_button2[0] and
-                   event.pos[1] >= mode_button2[1] and
-                   event.pos[0] <= mode_button2[2] and
-                   event.pos[1] <= mode_button2[3])):
+                  (mode_button2[0] <= event.pos[0] <= mode_button2[2] and
+                   mode_button2[1] <= event.pos[1] <= mode_button2[3])):
                 ans = third_screen("2")
                 if ans != "back":
                     return ["2", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= mode_button3[0] and
-                   event.pos[1] >= mode_button3[1] and
-                   event.pos[0] <= mode_button3[2] and
-                   event.pos[1] <= mode_button3[3])):
+                  (mode_button3[0] <= event.pos[0] <= mode_button3[2] and
+                   mode_button3[1] <= event.pos[1] <= mode_button3[3])):
                 ans = third_screen("3")
                 if ans != "back":
                     return ["3", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= mode_button4[0] and
-                   event.pos[1] >= mode_button4[1] and
-                   event.pos[0] <= mode_button4[2] and
-                   event.pos[1] <= mode_button4[3])):
+                  (mode_button4[0] <= event.pos[0] <= mode_button4[2] and
+                   mode_button4[1] <= event.pos[1] <= mode_button4[3])):
                 ans = third_screen("4")
                 if ans != "back":
                     return ["4", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= mode_button2x2[0] and
-                   event.pos[1] >= mode_button2x2[1] and
-                   event.pos[0] <= mode_button2x2[2] and
-                   event.pos[1] <= mode_button2x2[3])):
+                  (mode_button2x2[0] <= event.pos[0] <= mode_button2x2[2] and
+                   mode_button2x2[1] <= event.pos[1] <= mode_button2x2[3])):
                 ans = third_screen("2x2")
                 if ans != "back":
                     return ["2x2", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= quit_button[0] and
-                   event.pos[1] >= quit_button[1] and
-                   event.pos[0] <= quit_button[2] and
-                   event.pos[1] <= quit_button[3])):
+                  (quit_button[0] <= event.pos[0] <= quit_button[2] and
+                   quit_button[1] <= event.pos[1] <= quit_button[3])):
                 terminate()
         if flag1:
             f1 = pygame.font.SysFont('Times New Roman', 60)
@@ -383,6 +388,7 @@ def second_screen():
         pygame.display.flip()
         clock.tick(FPS)
 
+
 def start_screen():
     st_screen = pygame.display.set_mode((1000, 800))
     screen.blit(st_screen, (0, 0))
@@ -399,31 +405,35 @@ def start_screen():
         pos_text = (270, 345)
         pos_q = (390, 475)
         for event in pygame.event.get():
-            if event.type == MOUSEMOTION and (event.pos[0] >= play_button_pos[0] and event.pos[1] >= play_button_pos[1] and event.pos[0] <= play_button_pos[2] and event.pos[1] <= play_button_pos[3]):
+            if event.type == MOUSEMOTION and (
+                    play_button_pos[0] <= event.pos[0] <= play_button_pos[2] and play_button_pos[1] <= event.pos[1] <=
+                    play_button_pos[3]):
                 f1 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= play_button_pos[0] and event.pos[1] >= play_button_pos[1] and event.pos[0] <= play_button_pos[2] and event.pos[1] <= play_button_pos[3]):
+            elif event.type == MOUSEMOTION and not (
+                    play_button_pos[0] <= event.pos[0] <= play_button_pos[2] and play_button_pos[1] <= event.pos[1] <=
+                    play_button_pos[3]):
                 f1 = False
 
-            if event.type == MOUSEMOTION and (event.pos[0] >= quit_button_pos[0] and event.pos[1] >= quit_button_pos[1] and event.pos[0] <= quit_button_pos[2] and event.pos[1] <= quit_button_pos[3]):
+            if event.type == MOUSEMOTION and (
+                    quit_button_pos[0] <= event.pos[0] <= quit_button_pos[2] and quit_button_pos[1] <= event.pos[1] <=
+                    quit_button_pos[3]):
                 f2 = True
 
-            elif event.type == MOUSEMOTION and not (event.pos[0] >= quit_button_pos[0] and event.pos[1] >= quit_button_pos[1] and event.pos[0] <= quit_button_pos[2] and event.pos[1] <= quit_button_pos[3]):
+            elif event.type == MOUSEMOTION and not (
+                    quit_button_pos[0] <= event.pos[0] <= quit_button_pos[2] and quit_button_pos[1] <= event.pos[1] <=
+                    quit_button_pos[3]):
                 f2 = False
 
             if event.type == pygame.QUIT:
                 terminate()
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= play_button_pos[0] and
-                   event.pos[1] >= play_button_pos[1] and
-                   event.pos[0] <= play_button_pos[2] and
-                   event.pos[1] <= play_button_pos[3])):
+                  (play_button_pos[0] <= event.pos[0] <= play_button_pos[2] and
+                   play_button_pos[1] <= event.pos[1] <= play_button_pos[3])):
                 return True
             elif (event.type == pygame.MOUSEBUTTONDOWN and
-                  (event.pos[0] >= quit_button_pos[0] and
-                   event.pos[1] >= quit_button_pos[1] and
-                   event.pos[0] <= quit_button_pos[2] and
-                   event.pos[1] <= quit_button_pos[3])):
+                  (quit_button_pos[0] <= event.pos[0] <= quit_button_pos[2] and
+                   quit_button_pos[1] <= event.pos[1] <= quit_button_pos[3])):
                 terminate()
         if f1:
             f = pygame.font.SysFont('Times New Roman', 120)

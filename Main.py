@@ -3,7 +3,6 @@ import random
 import math
 from Collision.Board import Board
 from Collision.Bullet import Bullet, bullets, players
-from Collision.Border import horizontal_borders, vertical_borders
 from Collision.Player import Player
 
 

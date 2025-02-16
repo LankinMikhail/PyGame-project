@@ -1,19 +1,20 @@
 import pygame
-import os
 import math
-from Collision.Bullet import Bullet
+import os
+from Collision.Bullet import Bullet, players, load_image, vertical_borders, horizontal_borders
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, team, x, y, angle):
         super().__init__()
+        self.rect = None
         self.team = team
         self.x = x
         self.y = y
         self.angle = angle
         self.effect = None
         self.motion = "stop"
-        self.rotating = "stop"
+        self.rotation = "stop"
         self.is_alive = True
         self.width = 40
         self.height = 60
@@ -23,27 +24,52 @@ class Player(pygame.sprite.Sprite):
             self.a = "a"
             self.d = "d"
             self.q = "q"
+        self.add(players)
 
     def render(self, screen):
+        angle = round(self.angle)
         center = self.center()
         texture = pygame.transform.rotate(pygame.transform.scale(load_image(os.path.dirname(__file__)[:-10]
                                                                             + "\\Assets\\тест_модель.png"),
-                                                                 (self.width, self.height)), self.angle + 180)
+                                                                 (self.width, self.height)), angle + 180)
+        self.rect = texture.get_rect()
+        self.rect.x = round(self.x - center[0])
+        self.rect.y = round(self.y - center[1])
+        self.mask = pygame.mask.from_surface(texture)
         screen.blit(texture, (round(self.x - center[0]), round(self.y - center[1])))
 
     def update(self):
+        base = (self.angle, self.x, self.y)
         angle = round(self.angle)
         if self.motion == "forward":
-            self.y += math.cos(math.radians(angle)) * 1.2
-            self.x += math.sin(math.radians(angle)) * 1.2
+            self.y += math.cos(math.radians(angle))
+            self.x += math.sin(math.radians(angle))
         elif self.motion == "back":
-            self.y -= math.cos(math.radians(angle)) * 1.2
-            self.x -= math.sin(math.radians(angle)) * 1.2
-        if self.rotating == "left":
-            self.angle -= 1.5
-        elif self.rotating == "right":
-            self.angle += 1.5
+            self.y -= math.cos(math.radians(angle))
+            self.x -= math.sin(math.radians(angle))
+        if self.rotation == "left":
+            self.angle -= 1.4
+        elif self.rotation == "right":
+            self.angle += 1.4
         self.angle %= 360
+        for border in vertical_borders:
+            if pygame.sprite.collide_mask(self, border):
+                if self.motion != "stop":
+                    self.x -= (self.x - base[1]) * 3
+                    self.y -= (self.y - base[2]) * 3
+                if self.rotation != "stop":
+                    self.angle -= (self.angle - base[0]) * 3
+                self.motion = "stop"
+                self.rotation = "stop"
+        for border in horizontal_borders:
+            if pygame.sprite.collide_mask(self, border):
+                if self.motion != "stop":
+                    self.x -= (self.x - base[1]) * 3
+                    self.y -= (self.y - base[2]) * 3
+                if self.rotation != "stop":
+                    self.angle -= (self.angle - base[0]) * 3
+                self.motion = "stop"
+                self.rotation = "stop"
 
     def center(self):
         angle = round(self.angle)
@@ -69,16 +95,17 @@ class Player(pygame.sprite.Sprite):
                        math.cos(math.radians(360 - angle)) * self.height) / 2)
         return x, y
 
+    def front(self):
+        angle = round(self.angle)
+        return (round(self.x + (self.height * 0.6 * math.sin(math.radians(angle)))),
+                round(self.y + (self.height * 0.6 * math.cos(math.radians(angle)))))
+
     def shoot(self, fps):
         velocity = 270 / fps
         angle = round(self.angle)
-        return Bullet(3, self.x, self.y, velocity * math.sin(math.radians(angle)),
+        front = self.front()
+        return Bullet(3, front[0], front[1], velocity * math.sin(math.radians(angle)),
                       velocity * math.cos(math.radians(angle)), fps * 20)
 
-
-def load_image(name):
-    fullname = os.path.join('data', name)
-    if not os.path.isfile(fullname):
-        raise FileNotFoundError(name)
-    image = pygame.image.load(fullname)
-    return image
+    def death(self):
+        print("DIE")

@@ -11,9 +11,11 @@ class Border(pygame.sprite.Sprite):
         if x1 == x2:
             self.add(vertical_borders)
             self.rect = pygame.Rect(x1, y1, 1, y2 - y1)
+            self.mask = pygame.mask.from_surface(pygame.Surface((1, y2 - y1)))
         else:
             self.add(horizontal_borders)
             self.rect = pygame.Rect(x1, y1, x2 - x1, 1)
+            self.mask = pygame.mask.from_surface(pygame.Surface((x2 - x1, 1)))
 
     def render(self, screen):
         if self.x1 == self.x2:

@@ -13,7 +13,8 @@ def terminate():
     sys.exit()
 
 
-def fourty_screen(cnt):
+def fourty_screen(cnt, screen):
+    clock = pygame.time.Clock()
     fr_screen = pygame.display.set_mode((1000, 800))
     screen.blit(fr_screen, (0, 0))
     back_button = (0, 725, 140, 800)
@@ -126,7 +127,8 @@ def fourty_screen(cnt):
         clock.tick(FPS // 30)
 
 
-def third_screen(cnt):
+def third_screen(cnt, screen):
+    clock = pygame.time.Clock()
     th_screen = pygame.display.set_mode((1000, 800))
     screen.blit(th_screen, (0, 0))
     small_level = (50, 350, 350, 500)
@@ -197,19 +199,19 @@ def third_screen(cnt):
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (small_level[0] <= event.pos[0] <= small_level[2] and
                    small_level[1] <= event.pos[1] <= small_level[3])):
-                ans = fourty_screen(cnt)
+                ans = fourty_screen(cnt, screen)
                 if ans:
                     return "small"
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (medium_level[0] <= event.pos[0] <= medium_level[2] and
                    medium_level[1] <= event.pos[1] <= medium_level[3])):
-                ans = fourty_screen(cnt)
+                ans = fourty_screen(cnt, screen)
                 if ans:
                     return "medium"
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (large_level[0] <= event.pos[0] <= large_level[2] and
                    large_level[1] <= event.pos[1] <= large_level[3])):
-                ans = fourty_screen(cnt)
+                ans = fourty_screen(cnt, screen)
                 if ans:
                     return "large"
             elif (event.type == pygame.MOUSEBUTTONDOWN and
@@ -240,7 +242,8 @@ def third_screen(cnt):
         clock.tick(FPS)
 
 
-def second_screen():
+def second_screen(screen):
+    clock = pygame.time.Clock()
     sec_screen = pygame.display.set_mode((1000, 800))
     screen.blit(sec_screen, (0, 0))
     mode_button2 = (25, 380, 255, 490)
@@ -327,28 +330,28 @@ def second_screen():
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (mode_button2[0] <= event.pos[0] <= mode_button2[2] and
                    mode_button2[1] <= event.pos[1] <= mode_button2[3])):
-                ans = third_screen("2")
+                ans = third_screen("2", screen)
                 if ans != "back":
                     return ["2", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (mode_button3[0] <= event.pos[0] <= mode_button3[2] and
                    mode_button3[1] <= event.pos[1] <= mode_button3[3])):
-                ans = third_screen("3")
+                ans = third_screen("3", screen)
                 if ans != "back":
                     return ["3", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (mode_button4[0] <= event.pos[0] <= mode_button4[2] and
                    mode_button4[1] <= event.pos[1] <= mode_button4[3])):
-                ans = third_screen("4")
+                ans = third_screen("4", screen)
                 if ans != "back":
                     return ["4", ans]
 
             elif (event.type == pygame.MOUSEBUTTONDOWN and
                   (mode_button2x2[0] <= event.pos[0] <= mode_button2x2[2] and
                    mode_button2x2[1] <= event.pos[1] <= mode_button2x2[3])):
-                ans = third_screen("2x2")
+                ans = third_screen("2x2", screen)
                 if ans != "back":
                     return ["2x2", ans]
 
@@ -389,7 +392,8 @@ def second_screen():
         clock.tick(FPS)
 
 
-def start_screen():
+def start_screen(screen):
+    clock = pygame.time.Clock()
     st_screen = pygame.display.set_mode((1000, 800))
     screen.blit(st_screen, (0, 0))
     play_button_pos = (250, 320, 750, 480)
@@ -456,13 +460,14 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((1000, 800))
     screen.fill((225, 225, 225))
     clock = pygame.time.Clock()
-    f1 = start_screen()
+    f1 = start_screen(screen)
     if f1:
-        mode_game = second_screen()
+        mode_game = second_screen(screen)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        print(mode_game)
         screen.fill((230, 230, 230))
         clock.tick(FPS)
         pygame.display.flip()

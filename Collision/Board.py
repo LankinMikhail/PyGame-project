@@ -1,5 +1,7 @@
 import pygame
-from Collision.Border import Border
+from Collision.Border import Border, horizontal_borders, vertical_borders
+from Collision.Player import players
+from Collision.Bullet import bullets
 
 
 class Board:
@@ -11,6 +13,13 @@ class Board:
         self.height = height
         self.board = [[""] * width for _ in range(height)]
         self.set_default()
+        for elem in horizontal_borders:
+            elem.kill()
+        for elem in vertical_borders:
+            elem.kill()
+        for elem in players:
+            elem.kill()
+        bullets.clear()
 
     def set_view(self, left, top, cell_size):
         self.left = left

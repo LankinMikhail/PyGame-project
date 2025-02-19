@@ -1,4 +1,5 @@
 import random
+from Collision.Player import Player
 
 
 def generation(width, height):
@@ -29,3 +30,49 @@ def random_place(width, height, cell_size, left, top, already):
         return random_place(width, height, cell_size, left, top, already)
     else:
         return randx, randy, randangle
+
+
+def random_map(mode, field):
+    if mode == "2":
+        already = []
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(1, pos[0], pos[1], pos[2], 1)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(2, pos[0], pos[1], pos[2], 2)
+    elif mode == "3":
+        already = []
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(1, pos[0], pos[1], pos[2], 1)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(2, pos[0], pos[1], pos[2], 2)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(3, pos[0], pos[1], pos[2], 3)
+    elif mode == "4":
+        already = []
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(1, pos[0], pos[1], pos[2], 1)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(2, pos[0], pos[1], pos[2], 2)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(3, pos[0], pos[1], pos[2], 3)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(4, pos[0], pos[1], pos[2], 4)
+    else:
+        already = []
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(1, pos[0], pos[1], pos[2], 1)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(1, pos[0], pos[1], pos[2], 2)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(4, pos[0], pos[1], pos[2], 3)
+        already.append((pos[0], pos[1]))
+        pos = random_place(field.width, field.height, field.cell_size, field.left, field.top, already)
+        Player(4, pos[0], pos[1], pos[2], 4)

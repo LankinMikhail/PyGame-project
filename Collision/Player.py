@@ -143,6 +143,4 @@ class Player(pygame.sprite.Sprite):
                       velocity * math.cos(math.radians(angle)), fps * 20)
 
     def death(self):
-        self.is_alive = False
-        self.rect.x = 10000
-        self.rect.y = 10000
+        self.kill()
